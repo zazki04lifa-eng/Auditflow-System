@@ -1,0 +1,384 @@
+/* ==========================================================================
+   Understanding Business Page Styles
+   Sprint 2 - Step 2 Wizard
+   ========================================================================== */
+
+/* ==========================================================================
+   Input Method Tabs
+   ========================================================================== */
+
+.input-method-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+}
+
+.tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-600);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab-btn:hover {
+    color: var(--color-gray-800);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.tab-btn.active {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-btn svg {
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Tab Panels
+   ========================================================================== */
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeIn var(--transition-normal);
+}
+
+/* ==========================================================================
+   Text Input Area
+   ========================================================================== */
+
+#business-description {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 280px;
+}
+
+.char-counter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+/* ==========================================================================
+   Upload Zone
+   ========================================================================== */
+
+.upload-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-gray-50);
+    text-align: center;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+    border-color: var(--color-primary);
+    background-color: rgba(30, 58, 138, 0.04);
+}
+
+.upload-zone.drag-over {
+    transform: scale(1.01);
+}
+
+.upload-icon {
+    margin-bottom: 16px;
+    color: var(--color-gray-400);
+}
+
+.upload-zone h3 {
+    margin: 0 0 8px;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+}
+
+.upload-zone p {
+    margin: 0 0 16px;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.upload-btn {
+    cursor: pointer;
+}
+
+.upload-hint {
+    display: block;
+    margin-top: 16px;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+/* ==========================================================================
+   File Preview
+   ========================================================================== */
+
+.file-preview {
+    margin-top: 24px;
+    padding: 20px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.file-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-600);
+}
+
+.file-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-name {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-size {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.file-status {
+    flex-shrink: 0;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+}
+
+.status-badge.processing {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--color-warning);
+}
+
+.status-badge.success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--color-completed);
+}
+
+.status-badge.error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--color-danger);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.remove-file {
+    flex-shrink: 0;
+    color: var(--color-gray-400);
+    transition: color var(--transition-fast);
+}
+
+.remove-file:hover {
+    color: var(--color-danger);
+}
+
+/* ==========================================================================
+   Extracted Text Preview
+   ========================================================================== */
+
+.extracted-text-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-gray-100);
+}
+
+.extracted-text-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.extracted-text-header h4 {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-600);
+}
+
+.confidence-badge {
+    padding: 4px 10px;
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--color-completed);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+}
+
+.extracted-text {
+    padding: 16px;
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    line-height: 1.7;
+    color: var(--color-gray-700);
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.extract-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: flex-end;
+}
+
+/* ==========================================================================
+   Edit Section
+   ========================================================================== */
+
+.edit-section {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.edit-section .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.edit-section .section-header h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+}
+
+.section-hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+#final-description {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 240px;
+}
+
+/* ==========================================================================
+   Version Indicator
+   ========================================================================== */
+
+.version-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .input-method-tabs {
+        flex-direction: column;
+    }
+
+    .tab-btn {
+        width: 100%;
+    }
+
+    .upload-zone {
+        padding: 32px 16px;
+    }
+
+    .file-info {
+        flex-wrap: wrap;
+    }
+
+    .file-status {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .extract-actions {
+        flex-direction: column;
+    }
+
+    .extract-actions .btn {
+        width: 100%;
+    }
+}

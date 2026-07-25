@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditFlow - Understanding Business</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Understanding Business Page Styles -->
+    <link rel="stylesheet" href="css/understanding-business.css">
+</head>
+
+<body>
+    <div class="wizard-layout">
+        <!-- ============================================
+         Sidebar Stepper
+         ============================================ -->
+        <aside class="wizard-sidebar">
+            <div class="wizard-sidebar-header">
+                <a href="dashboard.html" class="back-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                    <span>Kembali ke Dashboard</span>
+                </a>
+            </div>
+
+            <div class="wizard-stepper">
+                <div class="stepper-item completed" data-step="1">
+                    <div class="stepper-number">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Project Information</span>
+                        <span class="stepper-sublabel">Informasi dasar project</span>
+                    </div>
+                </div>
+
+                <div class="stepper-item active" data-step="2">
+                    <div class="stepper-number">2</div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Understanding Business</span>
+                        <span class="stepper-sublabel">Deskripsi proses bisnis</span>
+                    </div>
+                </div>
+
+                <div class="stepper-item" data-step="3">
+                    <div class="stepper-number">3</div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Flowchart Generation</span>
+                        <span class="stepper-sublabel">Parameter generate</span>
+                    </div>
+                </div>
+
+                <div class="stepper-item" data-step="4">
+                    <div class="stepper-number">4</div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Flowchart Editor</span>
+                        <span class="stepper-sublabel">Review & editing</span>
+                    </div>
+                </div>
+
+                <div class="stepper-item" data-step="5">
+                    <div class="stepper-number">5</div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Audit Analysis</span>
+                        <span class="stepper-sublabel">Analisis risiko & kontrol</span>
+                    </div>
+                </div>
+
+                <div class="stepper-item" data-step="6">
+                    <div class="stepper-number">6</div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Review & Approval</span>
+                        <span class="stepper-sublabel">Submit untuk review</span>
+                    </div>
+                </div>
+
+                <div class="stepper-item" data-step="7">
+                    <div class="stepper-number">7</div>
+                    <div class="stepper-content">
+                        <span class="stepper-label">Export & Reporting</span>
+                        <span class="stepper-sublabel">Download dokumen</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-sidebar-footer">
+                <div class="project-status">
+                    <span class="status-indicator draft"></span>
+                    <span class="status-text">Draft</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ============================================
+         Main Content
+         ============================================ -->
+        <main class="wizard-main">
+            <!-- Top Bar -->
+            <header class="wizard-topbar">
+                <div class="breadcrumb">
+                    <a href="dashboard.html">Dashboard</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Create Project</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-step">Step 2: Understanding Business</span>
+                </div>
+
+                <div class="topbar-actions">
+                    <div class="version-indicator" id="version-indicator">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>Version <span id="version-number">1.0</span></span>
+                    </div>
+                    <span class="auto-save-indicator hidden" id="auto-save-indicator">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        Tersimpan otomatis
+                    </span>
+                </div>
+            </header>
+
+            <!-- Form Content -->
+            <div class="wizard-content">
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <h1>Understanding Business Process</h1>
+                        <p>Deskripsikan proses bisnis yang akan diaudit. Anda dapat memasukkan teks secara manual atau
+                            mengunggah dokumen.</p>
+                    </div>
+
+                    <!-- Input Method Tabs -->
+                    <div class="input-method-tabs">
+                        <button class="tab-btn active" data-tab="text" id="tab-text">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                            Text Input
+                        </button>
+                        <button class="tab-btn" data-tab="upload" id="tab-upload">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            Upload Dokumen
+                        </button>
+                    </div>
+
+                    <!-- Text Input Panel -->
+                    <div class="tab-panel active" id="panel-text">
+                        <div class="form-group">
+                            <label for="business-description" class="required">Deskripsi Proses Bisnis</label>
+                            <textarea id="business-description" name="businessDescription" rows="12"
+                                placeholder="Contoh:&#10;&#10;Proses pembelian dimulai ketika departemen pembelian menerima permintaan pembelian dari departemen lain. Staff pembelian akan memilih vendor dari daftar vendor yang telah disetujui, kemudian membuat purchase order. PO harus disetujui oleh manajer pembelian sebelum dikirim ke vendor.&#10;&#10;Ketika barang diterima, staff gudang akan memeriksa kuantitas dan kualitas barang, kemudian membuat receiving report. Invoice dari vendor akan dicocokkan dengan PO dan receiving report sebelum pembayaran diproses."
+                                required></textarea>
+                            <span class="form-hint">Deskripsikan proses bisnis secara detail termasuk actor, aktivitas,
+                                dokumen, dan keputusan yang diambil.</span>
+                            <span class="form-error" id="business-description-error"></span>
+                            <div class="char-counter">
+                                <span id="char-count">0</span> karakter
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Panel -->
+                    <div class="tab-panel" id="panel-upload">
+                        <!-- Drop Zone -->
+                        <div class="upload-zone" id="upload-zone">
+                            <div class="upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="17 8 12 3 7 8" />
+                                    <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                            </div>
+                            <h3>Drag & Drop File di Sini</h3>
+                            <p>atau</p>
+                            <label for="file-input" class="btn btn-secondary upload-btn">
+                                Pilih File
+                                <input type="file" id="file-input" accept=".pdf,.docx,.doc" hidden>
+                            </label>
+                            <span class="upload-hint">Format yang didukung: PDF, DOCX (Maks. 10MB)</span>
+                        </div>
+
+                        <!-- File Preview (Hidden by default) -->
+                        <div class="file-preview hidden" id="file-preview">
+                            <div class="file-info">
+                                <div class="file-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                    </svg>
+                                </div>
+                                <div class="file-details">
+                                    <span class="file-name" id="file-name">document.pdf</span>
+                                    <span class="file-size" id="file-size">0 KB</span>
+                                </div>
+                                <div class="file-status" id="file-status">
+                                    <span class="status-badge processing">
+                                        <svg class="spinner" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10" stroke-dasharray="32"
+                                                stroke-dashoffset="32" />
+                                        </svg>
+                                        Memproses...
+                                    </span>
+                                </div>
+                                <button class="btn-icon remove-file" id="remove-file" title="Hapus file">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Extracted Text Preview -->
+                            <div class="extracted-text-container hidden" id="extracted-text-container">
+                                <div class="extracted-text-header">
+                                    <h4>Teks Diekstrak dari Dokumen</h4>
+                                    <span class="confidence-badge">Confidence: <span
+                                            id="confidence-score">0%</span></span>
+                                </div>
+                                <div class="extracted-text" id="extracted-text">
+                                    <!-- Extracted text will appear here -->
+                                </div>
+                                <div class="extract-actions">
+                                    <button class="btn btn-secondary btn-sm" id="re-extract-btn">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <polyline points="23 4 23 10 17 10" />
+                                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                                        </svg>
+                                        Extract Ulang
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" id="use-extracted-btn">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                        Gunakan Teks Ini
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Area (Shows after extraction or when switching back to text) -->
+                    <div class="edit-section hidden" id="edit-section">
+                        <div class="section-header">
+                            <h3>Edit Deskripsi</h3>
+                            <span class="section-hint">Anda dapat mengedit teks sebelum melanjutkan ke generate
+                                flowchart</span>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="final-description" name="finalDescription" rows="10"
+                                placeholder="Edit deskripsi proses bisnis di sini..."></textarea>
+                            <span class="form-hint">Pastikan deskripsi mencakup semua actor, aktivitas, dan keputusan
+                                penting.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <footer class="wizard-footer">
+                <div class="footer-left">
+                    <button type="button" class="btn btn-secondary" id="save-draft-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Save Draft
+                    </button>
+                </div>
+
+                <div class="footer-right">
+                    <button type="button" class="btn btn-secondary" id="back-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                        Back
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="next-btn">
+                        Next Step
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay hidden" id="success-modal">
+        <div class="modal modal-success">
+            <div class="modal-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-completed)"
+                    stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+            </div>
+            <h3 id="modal-title">Draft Tersimpan</h3>
+            <p id="modal-message">Understanding Business telah disimpan sebagai draft.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-back-dashboard">Kembali ke Dashboard</button>
+                <button class="btn btn-primary" id="modal-continue">Lanjutkan ke Step 3</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Validation Warning Modal -->
+    <div class="modal-overlay hidden" id="validation-modal">
+        <div class="modal modal-warning">
+            <div class="modal-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)"
+                    stroke-width="2">
+                    <path
+                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+            </div>
+            <h3>Peringatan Validasi</h3>
+            <p id="validation-message">Deskripsi proses bisnis belum cukup detail.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="validation-dismiss">Edit Lagi</button>
+                <button class="btn btn-primary" id="validation-continue">Lanjutkan Anyway</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- Schema Validator and Data Migration must load before app.js -->
+    <script src="js/schema-validator.js"></script>
+    <script src="js/data-migration.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/audit-formatter.js"></script>
+    <script src="js/audit-trail.js"></script>
+    <script src="js/understanding-business.js"></script>
+</body>
+
+</html>

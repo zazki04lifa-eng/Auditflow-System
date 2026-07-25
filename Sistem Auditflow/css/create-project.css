@@ -1,0 +1,516 @@
+/* ============================================
+   AuditFlow - Create Project Page Styles
+   ============================================ */
+
+.wizard-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-gray-50);
+}
+
+/* ============================================
+   Wizard Sidebar (Stepper)
+   ============================================ */
+.wizard-sidebar {
+    width: 300px;
+    background-color: var(--color-white);
+    border-right: 1px solid var(--color-gray-200);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+.wizard-sidebar-header {
+    padding: var(--spacing-4) var(--spacing-5);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--color-gray-600);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    transition: color var(--transition-fast);
+}
+
+.back-link:hover {
+    color: var(--color-primary);
+}
+
+/* Stepper */
+.wizard-stepper {
+    flex: 1;
+    padding: var(--spacing-4) var(--spacing-3);
+    overflow-y: auto;
+}
+
+.stepper-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) var(--spacing-2);
+    margin-bottom: var(--spacing-1);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.stepper-item:hover {
+    background-color: var(--color-gray-50);
+}
+
+.stepper-item.active {
+    background-color: rgba(26, 54, 93, 0.05);
+}
+
+.stepper-item.completed {
+    background-color: var(--color-gray-50);
+}
+
+.stepper-item.completed .stepper-number {
+    background-color: var(--color-completed);
+    color: var(--color-white);
+}
+
+.stepper-item.completed .stepper-number::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 3px;
+    border-left: 2px solid var(--color-white);
+    border-bottom: 2px solid var(--color-white);
+    transform: translate(-50%, -30%) rotate(-45deg);
+}
+
+.stepper-number {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.stepper-item.active .stepper-number {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    box-shadow: 0 0 0 4px rgba(26, 54, 93, 0.1);
+}
+
+.stepper-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.stepper-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    line-height: var(--line-height-tight);
+}
+
+.stepper-sublabel {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+    margin-top: var(--spacing-1);
+}
+
+.stepper-item.active .stepper-label {
+    color: var(--color-primary);
+}
+
+/* Sidebar Footer */
+.wizard-sidebar-footer {
+    padding: var(--spacing-4) var(--spacing-5);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.project-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+}
+
+.status-indicator.draft {
+    background-color: var(--color-draft);
+}
+
+.status-indicator.in-progress {
+    background-color: var(--color-in-progress);
+}
+
+.status-indicator.review {
+    background-color: var(--color-review);
+}
+
+.status-indicator.completed {
+    background-color: var(--color-completed);
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+.wizard-main {
+    flex: 1;
+    margin-left: 300px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Top Bar */
+.wizard-topbar {
+    height: var(--topnav-height);
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-6);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+}
+
+.breadcrumb a {
+    color: var(--color-gray-500);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: var(--color-primary);
+}
+
+.breadcrumb-separator {
+    color: var(--color-gray-300);
+}
+
+.breadcrumb-current {
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-medium);
+}
+
+.breadcrumb-step {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.auto-save-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-completed);
+    padding: var(--spacing-1) var(--spacing-3);
+    background-color: rgba(56, 161, 105, 0.1);
+    border-radius: var(--radius-full);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Wizard Content */
+.wizard-content {
+    flex: 1;
+    padding: var(--spacing-6);
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.form-wrapper {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-200);
+    overflow: hidden;
+}
+
+.form-header {
+    padding: var(--spacing-6);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.form-header h1 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.form-header p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-bottom: 0;
+    line-height: var(--line-height-relaxed);
+}
+
+/* Form */
+.project-form {
+    padding: var(--spacing-6);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ============================================
+   Footer Actions
+   ============================================ */
+.wizard-footer {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-gray-200);
+    padding: var(--spacing-4) var(--spacing-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    bottom: 0;
+}
+
+.footer-left {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+.footer-right {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+.btn svg {
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Success Modal
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay .modal {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-8);
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) .modal {
+    transform: translateY(0);
+}
+
+.modal-success {
+    text-align: center;
+    max-width: 400px;
+}
+
+.modal-icon {
+    margin-bottom: var(--spacing-4);
+}
+
+.modal-success h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.modal-success p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-6);
+}
+
+.modal-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    justify-content: center;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 1024px) {
+    .wizard-sidebar {
+        width: 260px;
+    }
+
+    .wizard-main {
+        margin-left: 260px;
+    }
+
+    .stepper-sublabel {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .wizard-sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+    }
+
+    .wizard-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .wizard-main {
+        margin-left: 0;
+    }
+
+    .wizard-content {
+        padding: var(--spacing-4);
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .wizard-footer {
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+    .footer-left,
+    .footer-right {
+        width: 100%;
+    }
+
+    .footer-right {
+        flex-direction: column-reverse;
+    }
+
+    .footer-right .btn {
+        width: 100%;
+    }
+
+    .wizard-topbar {
+        padding: 0 var(--spacing-4);
+    }
+
+    .breadcrumb {
+        font-size: var(--font-size-xs);
+    }
+
+    .breadcrumb-step {
+        display: none;
+    }
+}
+
+/* ============================================
+   Wizard Sidebar Overlay (Mobile)
+   ============================================ */
+.wizard-sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.wizard-sidebar-overlay.active {
+    display: block;
+}
+
+/* ============================================
+   Validation States
+   ============================================ */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+    border-color: var(--color-risk-high);
+}
+
+.form-group.has-error input:focus,
+.form-group.has-error select:focus,
+.form-group.has-error textarea:focus {
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+.form-group.has-success input,
+.form-group.has-success select,
+.form-group.has-success textarea {
+    border-color: var(--color-completed);
+}

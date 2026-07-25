@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditFlow - Login</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Login Page Styles -->
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body class="login-page">
+    <div class="login-container">
+        <!-- Left Panel - Branding -->
+        <div class="login-branding">
+            <div class="branding-content">
+                <div class="logo">
+                    <!-- New Logo: Cartoon auditor with happy magnifying glass -->
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Auditor body -->
+                        <circle cx="24" cy="14" r="8" fill="white" fill-opacity="0.15" stroke="white"
+                            stroke-width="2" />
+                        <ellipse cx="24" cy="34" rx="10" ry="12" fill="white" fill-opacity="0.15" stroke="white"
+                            stroke-width="2" />
+                        <!-- Arm holding magnifying glass -->
+                        <path d="M32 28 L40 34" stroke="white" stroke-width="3" stroke-linecap="round" />
+                        <!-- Magnifying glass handle -->
+                        <line x1="40" y1="34" x2="44" y2="42" stroke="#38a169" stroke-width="3"
+                            stroke-linecap="round" />
+                        <!-- Magnifying glass frame -->
+                        <circle cx="42" cy="26" r="7" stroke="#38a169" stroke-width="2.5" fill="white"
+                            fill-opacity="0.1" />
+                        <!-- Happy face inside magnifying glass -->
+                        <circle cx="39" cy="23" r="1.5" fill="white" />
+                        <circle cx="45" cy="23" r="1.5" fill="white" />
+                        <path d="M39 28 Q42 31 45 28" stroke="white" stroke-width="1.5" fill="none"
+                            stroke-linecap="round" />
+                        <!-- Sparkle -->
+                        <path d="M42 18 L42.5 20 L44 20.5 L42.5 21 L42 23 L41.5 21 L40 20.5 L41.5 20 Z"
+                            fill="#ecc94b" />
+                    </svg>
+                    <span class="logo-text">AuditFlow</span>
+                </div>
+
+                <h1 class="tagline">Transforming Business Process into Intelligent Audit Analysis</h1>
+
+                <div class="branding-illustration">
+                    <!-- Abstract Flowchart Illustration -->
+                    <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Swimlanes -->
+                        <line x1="50" y1="20" x2="250" y2="20" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                        <line x1="50" y1="80" x2="250" y2="80" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                        <line x1="50" y1="140" x2="250" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+
+                        <!-- Nodes -->
+                        <rect x="60" y="35" width="50" height="30" rx="4" stroke="rgba(255,255,255,0.6)"
+                            stroke-width="2" fill="none" />
+                        <rect x="140" y="35" width="50" height="30" rx="4" stroke="rgba(255,255,255,0.6)"
+                            stroke-width="2" fill="none" />
+                        <polygon points="220,50 250,65 220,80 190,65" stroke="rgba(255,255,255,0.6)" stroke-width="2"
+                            fill="none" />
+                        <rect x="60" y="95" width="50" height="30" rx="4" stroke="rgba(255,255,255,0.6)"
+                            stroke-width="2" fill="none" />
+                        <rect x="140" y="95" width="50" height="30" rx="4" stroke="rgba(255,255,255,0.6)"
+                            stroke-width="2" fill="none" />
+                        <rect x="60" y="155" width="50" height="30" rx="4" stroke="rgba(255,255,255,0.6)"
+                            stroke-width="2" fill="none" />
+
+                        <!-- Connectors -->
+                        <path d="M110,50 L140,50" stroke="rgba(255,255,255,0.4)" stroke-width="2" />
+                        <path d="M190,65 L220,65" stroke="rgba(255,255,255,0.4)" stroke-width="2" />
+                        <path d="M85,65 L85,95" stroke="rgba(255,255,255,0.4)" stroke-width="2" />
+                        <path d="M165,65 L165,95" stroke="rgba(255,255,255,0.4)" stroke-width="2" />
+                        <path d="M85,125 L85,155" stroke="rgba(255,255,255,0.4)" stroke-width="2" />
+                    </svg>
+                </div>
+
+                <p class="copyright">© 2024 AuditFlow. All rights reserved.</p>
+            </div>
+        </div>
+
+        <!-- Right Panel - Login Form -->
+        <div class="login-form-panel">
+            <div class="login-form-container">
+                <div class="login-header">
+                    <h2>Selamat Datang</h2>
+                    <p class="login-subtitle">Masuk ke akun AuditFlow Anda</p>
+                </div>
+
+                <!-- Alert Messages -->
+                <div id="login-alert" class="alert hidden" role="alert"></div>
+
+                <form id="login-form" class="login-form" novalidate>
+                    <!-- Email Input -->
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" name="email" placeholder="nama@perusahaan.com"
+                            autocomplete="email" required>
+                        <span class="form-error" id="email-error"></span>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <label for="password" class="required">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="password" name="password" placeholder="Masukkan password"
+                                autocomplete="current-password" required minlength="6">
+                            <button type="button" class="password-toggle" id="password-toggle"
+                                aria-label="Toggle password visibility">
+                                <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                <svg class="eye-off-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                    <line x1="1" y1="1" x2="23" y2="23" />
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="form-error" id="password-error"></span>
+                    </div>
+
+                    <!-- Role Selection -->
+                    <div class="form-group">
+                        <label for="role" class="required">Peran</label>
+                        <select id="role" name="role" required>
+                            <option value="">Pilih peran Anda</option>
+                            <option value="auditor">Auditor</option>
+                            <option value="supervisor">Supervisor</option>
+                        </select>
+                        <span class="form-error" id="role-error"></span>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="remember-me" name="remember">
+                            <span class="checkbox-label">Ingat saya</span>
+                        </label>
+                        <a href="#" class="forgot-password" id="forgot-password-link">Lupa password?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-full btn-lg" id="login-btn">
+                        <span class="btn-text">Masuk</span>
+                        <span class="spinner hidden"></span>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="login-divider">
+                    <span>atau</span>
+                </div>
+
+                <!-- Register Link -->
+                <div class="register-link">
+                    <p>Belum punya akun? <a href="#" id="register-link">Daftar sekarang</a></p>
+                </div>
+
+                <!-- Footer -->
+                <div class="login-footer">
+                    <p class="version">Versi 1.0.0 (MVP)</p>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <span class="divider">•</span>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay hidden" id="forgot-password-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Reset Password</h3>
+                <button class="modal-close" id="modal-close" aria-label="Close modal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Masukkan email Anda dan kami akan mengirimkan link reset password.</p>
+                <div class="form-group mt-4">
+                    <label for="reset-email" class="required">Email</label>
+                    <input type="email" id="reset-email" placeholder="nama@perusahaan.com">
+                    <span class="form-error" id="reset-email-error"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-cancel">Batal</button>
+                <button class="btn btn-primary" id="modal-submit">Kirim Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- Schema Validator and Data Migration must load before app.js -->
+    <script src="js/schema-validator.js"></script>
+    <script src="js/data-migration.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/audit-formatter.js"></script>
+    <script src="js/audit-trail.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

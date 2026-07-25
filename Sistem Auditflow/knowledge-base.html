@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditFlow - Knowledge Base</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Knowledge Base Page Styles -->
+    <style>
+        .kb-page {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .kb-sidebar {
+            width: 280px;
+            background: var(--color-gray-50);
+            border-right: 1px solid var(--color-gray-200);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .kb-sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--color-gray-200);
+            margin-bottom: 16px;
+        }
+
+        .kb-sidebar-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0;
+        }
+
+        .kb-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .kb-nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .kb-nav-item:hover {
+            background: var(--color-gray-100);
+        }
+
+        .kb-nav-item.active {
+            background: var(--color-blue-50);
+            border-left-color: var(--color-blue-600);
+            color: var(--color-blue-700);
+        }
+
+        .kb-nav-item-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .kb-nav-item-desc {
+            font-size: 12px;
+            color: var(--color-gray-500);
+        }
+
+        .kb-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 32px;
+            max-width: calc(100% - 280px);
+        }
+
+        .kb-header {
+            margin-bottom: 32px;
+        }
+
+        .kb-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin: 0 0 8px;
+        }
+
+        .kb-subtitle {
+            font-size: 16px;
+            color: var(--color-gray-500);
+            margin: 0;
+        }
+
+        .kb-search-box {
+            position: relative;
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+
+        .kb-search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .kb-search-box input:focus {
+            outline: none;
+            border-color: var(--color-blue-500);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .kb-search-box svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-gray-400);
+        }
+
+        .kb-section {
+            margin-bottom: 40px;
+        }
+
+        .kb-section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+
+        .kb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .kb-card {
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .kb-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .kb-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .kb-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .kb-card-icon.assertion {
+            background: var(--color-blue-100);
+            color: var(--color-blue-600);
+        }
+
+        .kb-card-icon.wcgw {
+            background: var(--color-orange-100);
+            color: var(--color-orange-600);
+        }
+
+        .kb-card-icon.control {
+            background: var(--color-green-100);
+            color: var(--color-green-600);
+        }
+
+        .kb-card-icon.risk {
+            background: var(--color-red-100);
+            color: var(--color-red-600);
+        }
+
+        .kb-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-gray-900);
+            margin: 0;
+        }
+
+        .kb-card-desc {
+            font-size: 14px;
+            color: var(--color-gray-600);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .kb-card-meta {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .kb-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .kb-badge-high {
+            background: var(--color-red-100);
+            color: var(--color-red-700);
+        }
+
+        .kb-badge-medium {
+            background: var(--color-orange-100);
+            color: var(--color-orange-700);
+        }
+
+        .kb-badge-low {
+            background: var(--color-green-100);
+            color: var(--color-green-700);
+        }
+
+        .kb-badge-preventive {
+            background: var(--color-blue-100);
+            color: var(--color-blue-700);
+        }
+
+        .kb-badge-detective {
+            background: var(--color-purple-100);
+            color: var(--color-purple-700);
+        }
+
+        .kb-detail-panel {
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .kb-detail-panel.active {
+            display: block;
+        }
+
+        .kb-detail-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--color-gray-900);
+            margin: 0 0 16px;
+        }
+
+        .kb-detail-section {
+            margin-bottom: 20px;
+        }
+
+        .kb-detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .kb-detail-text {
+            font-size: 15px;
+            color: var(--color-gray-700);
+            line-height: 1.7;
+        }
+
+        .kb-detail-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .kb-detail-list li {
+            padding: 8px 0 8px 24px;
+            position: relative;
+            font-size: 14px;
+            color: var(--color-gray-700);
+            line-height: 1.6;
+        }
+
+        .kb-detail-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-blue-500);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .kb-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .kb-stat-card {
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .kb-stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-blue-600);
+        }
+
+        .kb-stat-label {
+            font-size: 13px;
+            color: var(--color-gray-500);
+            margin-top: 4px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-blue-600);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--color-blue-700);
+        }
+
+        @media (max-width: 1024px) {
+            .kb-sidebar {
+                width: 240px;
+            }
+
+            .kb-main {
+                margin-left: 240px;
+                max-width: calc(100% - 240px);
+            }
+
+            .kb-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kb-sidebar {
+                display: none;
+            }
+
+            .kb-main {
+                margin-left: 0;
+                max-width: 100%;
+                padding: 20px;
+            }
+
+            .kb-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kb-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="kb-page">
+        <!-- Sidebar Navigation -->
+        <aside class="kb-sidebar">
+            <div class="kb-sidebar-header">
+                <a href="dashboard.html" style="text-decoration: none; color: inherit;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 8px;">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                    <div style="font-size: 12px; color: var(--color-gray-500);">Back to Dashboard</div>
+                </a>
+            </div>
+            
+            <!-- Main Navigation -->
+            <div style="padding: 16px 24px;">
+                <div style="font-size: 11px; font-weight: 600; color: var(--color-gray-400); text-transform: uppercase; margin-bottom: 8px;">Navigation</div>
+                <ul class="kb-nav-list" style="margin-bottom: 16px;">
+                    <li class="kb-nav-item" onclick="window.location.href='dashboard.html'" style="padding: 8px 12px;">
+                        <div class="kb-nav-item-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                                <rect x="3" y="3" width="7" height="7" />
+                                <rect x="14" y="3" width="7" height="7" />
+                                <rect x="14" y="14" width="7" height="7" />
+                                <rect x="3" y="14" width="7" height="7" />
+                            </svg>
+                            Dashboard
+                        </div>
+                    </li>
+                    <li class="kb-nav-item" onclick="window.location.href='audit-summary.html'" style="padding: 8px 12px;">
+                        <div class="kb-nav-item-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                            </svg>
+                            Audit Summary
+                        </div>
+                    </li>
+                    <li class="kb-nav-item" onclick="window.location.href='settings.html'" style="padding: 8px 12px;">
+                        <div class="kb-nav-item-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                                <circle cx="12" cy="12" r="3" />
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                            </svg>
+                            Settings
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Knowledge Base Sections -->
+            <div style="padding: 0 24px;">
+                <div style="font-size: 11px; font-weight: 600; color: var(--color-gray-400); text-transform: uppercase; margin-bottom: 8px;">Knowledge Base</div>
+            </div>
+            <ul class="kb-nav-list">
+                <li class="kb-nav-item active" data-section="assertions">
+                    <div class="kb-nav-item-title">Assertions</div>
+                    <div class="kb-nav-item-desc">Audit assertions & definitions</div>
+                </li>
+                <li class="kb-nav-item" data-section="wcgw">
+                    <div class="kb-nav-item-title">WCGW Library</div>
+                    <div class="kb-nav-item-desc">What Can Go Wrong scenarios</div>
+                </li>
+                <li class="kb-nav-item" data-section="controls">
+                    <div class="kb-nav-item-title">Control Library</div>
+                    <div class="kb-nav-item-desc">Internal control definitions</div>
+                </li>
+                <li class="kb-nav-item" data-section="rules">
+                    <div class="kb-nav-item-title">Detection Rules</div>
+                    <div class="kb-nav-item-desc">WCGW detection rules</div>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="kb-main">
+            <a href="dashboard.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+                Back to Dashboard
+            </a>
+
+            <header class="kb-header">
+                <h1 class="kb-title">Knowledge Base</h1>
+                <p class="kb-subtitle">Comprehensive reference for audit rules, controls, and WCGW scenarios</p>
+            </header>
+
+            <!-- Search Box -->
+            <div class="kb-search-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input type="text" id="kb-search" placeholder="Search knowledge base...">
+            </div>
+
+            <!-- Statistics -->
+            <div class="kb-stats" id="kb-stats">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Assertions Section -->
+            <section class="kb-section" id="section-assertions">
+                <h2 class="kb-section-title">Audit Assertions</h2>
+                <div class="kb-grid" id="assertions-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- WCGW Section -->
+            <section class="kb-section hidden" id="section-wcgw">
+                <h2 class="kb-section-title">What Can Go Wrong (WCGW)</h2>
+                <div class="kb-grid" id="wcgw-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="kb-section hidden" id="section-controls">
+                <h2 class="kb-section-title">Internal Controls</h2>
+                <div class="kb-grid" id="controls-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Rules Section -->
+            <section class="kb-section hidden" id="section-rules">
+                <h2 class="kb-section-title">Detection Rules</h2>
+                <div class="kb-grid" id="rules-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/knowledgeBase.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize
+            renderStatistics();
+            renderAssertions();
+            renderWCGW();
+            renderControls();
+            renderRules();
+
+            // Navigation
+            document.querySelectorAll('.kb-nav-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const section = this.dataset.section;
+                    switchSection(section);
+                });
+            });
+
+            // Search
+            document.getElementById('kb-search').addEventListener('input', function (e) {
+                const query = e.target.value.toLowerCase();
+                filterContent(query);
+            });
+        });
+
+        function switchSection(section) {
+            // Update nav
+            document.querySelectorAll('.kb-nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.section === section);
+            });
+
+            // Update sections
+            document.querySelectorAll('.kb-section').forEach(sec => {
+                sec.classList.add('hidden');
+            });
+            document.getElementById('section-' + section).classList.remove('hidden');
+        }
+
+        function renderStatistics() {
+            const stats = KnowledgeBase.getStatistics();
+            document.getElementById('kb-stats').innerHTML = `
+                <div class="kb-stat-card">
+                    <div class="kb-stat-value">${stats.totalRules}</div>
+                    <div class="kb-stat-label">Detection Rules</div>
+                </div>
+                <div class="kb-stat-card">
+                    <div class="kb-stat-value">${stats.rulesByAssertion}</div>
+                    <div class="kb-stat-label">Assertions</div>
+                </div>
+                <div class="kb-stat-card">
+                    <div class="kb-stat-value">${stats.wcgwDefinitions}</div>
+                    <div class="kb-stat-label">WCGW Scenarios</div>
+                </div>
+                <div class="kb-stat-card">
+                    <div class="kb-stat-value">${stats.controlsDefined}</div>
+                    <div class="kb-stat-label">Controls</div>
+                </div>
+            `;
+        }
+
+        function renderAssertions() {
+            const grid = document.getElementById('assertions-grid');
+            grid.innerHTML = '';
+
+            Object.values(KnowledgeBase.assertionLibrary).forEach(assertion => {
+                const card = document.createElement('div');
+                card.className = 'kb-card';
+                card.innerHTML = `
+                    <div class="kb-card-header">
+                        <div class="kb-card-icon assertion">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                        </div>
+                        <h3 class="kb-card-title">${assertion.name}</h3>
+                    </div>
+                    <p class="kb-card-desc">${assertion.description}</p>
+                `;
+                card.addEventListener('click', () => showDetail('assertion', assertion));
+                grid.appendChild(card);
+            });
+        }
+
+        function renderWCGW() {
+            const grid = document.getElementById('wcgw-grid');
+            grid.innerHTML = '';
+
+            Object.values(KnowledgeBase.wcgwLibrary).forEach(wcgw => {
+                const card = document.createElement('div');
+                card.className = 'kb-card';
+                const riskClass = wcgw.riskLevel === 'high' ? 'kb-badge-high' : wcgw.riskLevel === 'medium' ? 'kb-badge-medium' : 'kb-badge-low';
+                card.innerHTML = `
+                    <div class="kb-card-header">
+                        <div class="kb-card-icon wcgw">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                                <line x1="12" y1="9" x2="12" y2="13" />
+                                <line x1="12" y1="17" x2="12.01" y2="17" />
+                            </svg>
+                        </div>
+                        <h3 class="kb-card-title">${wcgw.name}</h3>
+                    </div>
+                    <p class="kb-card-desc">${wcgw.description}</p>
+                    <div class="kb-card-meta">
+                        <span class="kb-badge ${riskClass}">${wcgw.riskLevel.toUpperCase()}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showDetail('wcgw', wcgw));
+                grid.appendChild(card);
+            });
+        }
+
+        function renderControls() {
+            const grid = document.getElementById('controls-grid');
+            grid.innerHTML = '';
+
+            Object.values(KnowledgeBase.controlLibrary).forEach(control => {
+                const card = document.createElement('div');
+                card.className = 'kb-card';
+                const typeClass = control.type === 'preventive' ? 'kb-badge-preventive' : 'kb-badge-detective';
+                card.innerHTML = `
+                    <div class="kb-card-header">
+                        <div class="kb-card-icon control">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                        </div>
+                        <h3 class="kb-card-title">${control.name}</h3>
+                    </div>
+                    <p class="kb-card-desc">${control.description}</p>
+                    <div class="kb-card-meta">
+                        <span class="kb-badge ${typeClass}">${control.type}</span>
+                        <span class="kb-badge kb-badge-low">Eff: ${Math.round(control.effectiveness * 100)}%</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showDetail('control', control));
+                grid.appendChild(card);
+            });
+        }
+
+        function renderRules() {
+            const grid = document.getElementById('rules-grid');
+            grid.innerHTML = '';
+
+            KnowledgeBase.rules.forEach(rule => {
+                const card = document.createElement('div');
+                card.className = 'kb-card';
+                const riskClass = rule.riskLevel === 'high' ? 'kb-badge-high' : rule.riskLevel === 'medium' ? 'kb-badge-medium' : 'kb-badge-low';
+                card.innerHTML = `
+                    <div class="kb-card-header">
+                        <div class="kb-card-icon risk">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </div>
+                        <h3 class="kb-card-title">${rule.name}</h3>
+                    </div>
+                    <p class="kb-card-desc">${rule.description}</p>
+                    <div class="kb-card-meta">
+                        <span class="kb-badge ${riskClass}">${rule.riskLevel.toUpperCase()}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => showDetail('rule', rule));
+                grid.appendChild(card);
+            });
+        }
+
+        function showDetail(type, data) {
+            // Create or update detail panel
+            let panel = document.getElementById('detail-panel');
+            if (!panel) {
+                panel = document.createElement('div');
+                panel.id = 'detail-panel';
+                panel.className = 'kb-detail-panel';
+                document.querySelector('.kb-main').appendChild(panel);
+            }
+
+            let content = '';
+            content += `<h2 class="kb-detail-title">${data.name}</h2>`;
+
+            if (data.description) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Description</div>
+                    <p class="kb-detail-text">${data.description}</p>
+                </div>`;
+            }
+
+            if (data.auditFocus) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Audit Focus</div>
+                    <p class="kb-detail-text">${data.auditFocus}</p>
+                </div>`;
+            }
+
+            if (data.impact) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Impact</div>
+                    <p class="kb-detail-text">${data.impact}</p>
+                </div>`;
+            }
+
+            if (data.wcgwExamples) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Examples</div>
+                    <ul class="kb-detail-list">
+                        ${data.wcgwExamples.map(ex => `<li>${ex}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+
+            if (data.indicators) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Risk Indicators</div>
+                    <ul class="kb-detail-list">
+                        ${data.indicators.map(ind => `<li>${ind}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+
+            if (data.mitigatesAssertions) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Mitigates Assertions</div>
+                    <p class="kb-detail-text">${data.mitigatesAssertions.join(', ')}</p>
+                </div>`;
+            }
+
+            if (data.recommendedControls) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Recommended Controls</div>
+                    <p class="kb-detail-text">${data.recommendedControls.join(', ')}</p>
+                </div>`;
+            }
+
+            if (data.triggerProcesses) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Trigger Processes</div>
+                    <p class="kb-detail-text">${data.triggerProcesses.join(', ')}</p>
+                </div>`;
+            }
+
+            if (data.requiredProcesses) {
+                content += `<div class="kb-detail-section">
+                    <div class="kb-detail-label">Required Processes</div>
+                    <p class="kb-detail-text">${data.requiredProcesses.join(', ')}</p>
+                </div>`;
+            }
+
+            panel.innerHTML = content;
+            panel.classList.add('active');
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterContent(query) {
+            if (!query) {
+                document.querySelectorAll('.kb-card').forEach(card => {
+                    card.style.display = '';
+                });
+                return;
+            }
+
+            document.querySelectorAll('.kb-card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>

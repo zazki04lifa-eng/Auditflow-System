@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditFlow - Flowchart Editor</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Flowchart Editor Page Styles -->
+    <link rel="stylesheet" href="css/flowchart-editor.css">
+    <link rel="stylesheet" href="css/detection-panel.css">
+</head>
+
+<body class="editor-page">
+    <div class="editor-layout">
+        <!-- ============================================
+         Top Toolbar
+         ============================================ -->
+        <header class="editor-toolbar">
+            <div class="toolbar-left">
+                <a href="dashboard.html" class="toolbar-back" title="Kembali ke Dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </a>
+                <div class="toolbar-divider"></div>
+                <div class="project-info">
+                    <span class="project-name" id="project-name">Audit Project</span>
+                    <span class="project-status draft">Draft</span>
+                </div>
+            </div>
+
+            <div class="toolbar-center">
+                <div class="zoom-controls">
+                    <button class="toolbar-btn" id="zoom-out" title="Zoom Out">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            <line x1="8" y1="11" x2="14" y2="11" />
+                        </svg>
+                    </button>
+                    <span class="zoom-level" id="zoom-level">100%</span>
+                    <button class="toolbar-btn" id="zoom-in" title="Zoom In">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            <line x1="11" y1="8" x2="11" y2="14" />
+                            <line x1="8" y1="11" x2="14" y2="11" />
+                        </svg>
+                    </button>
+                    <button class="toolbar-btn" id="zoom-fit" title="Fit to Screen">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="toolbar-divider"></div>
+
+                <div class="history-controls">
+                    <button class="toolbar-btn" id="undo-btn" title="Undo (Ctrl+Z)" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="1 4 1 10 7 10" />
+                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                        </svg>
+                    </button>
+                    <button class="toolbar-btn" id="redo-btn" title="Redo (Ctrl+Y)" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="23 4 23 10 17 10" />
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="toolbar-divider"></div>
+
+                <!-- Sprint 6 Phase 1: Orientation Toggle -->
+                <div class="orientation-controls">
+                    <button class="toolbar-btn" id="orientation-toggle"
+                        title="Toggle Orientation (Vertical/Horizontal)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="7" height="18" rx="1" class="orientation-lane" />
+                            <rect x="14" y="3" width="7" height="18" rx="1" class="orientation-lane" />
+                            <path d="M6.5 12h11" stroke-dasharray="2 2" class="orientation-flow" />
+                        </svg>
+                        <span class="orientation-label">Vertical</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="toolbar-right">
+                <button class="toolbar-btn" id="run-detection-btn" title="Run WCGW Detection">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    <span>Detect WCGW</span>
+                </button>
+
+                <button class="toolbar-btn" id="generate-controls-btn" title="Generate Control Recommendations">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    <span>Recommend Controls</span>
+                </button>
+
+                <button class="toolbar-btn" id="effectiveness-btn" title="Assess Control Effectiveness">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <span>Assess Effectiveness</span>
+                </button>
+
+                <button class="toolbar-btn" id="residual-risk-btn" title="Calculate Residual Risk">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="M9 12l2 2 4-4" />
+                        <circle cx="12" cy="12" r="10" opacity="0.3" />
+                    </svg>
+                    <span>Residual Risk</span>
+                </button>
+
+                <button class="toolbar-btn" id="audit-recommendation-btn" title="Generate Audit Recommendations">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    <span>Audit Procedures</span>
+                </button>
+
+                <button class="toolbar-btn" id="export-btn" title="Export WCGW Report">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span>Export WCGW</span>
+                </button>
+
+                <button class="toolbar-btn" id="export-simple-btn" title="Export Flowchart as PNG/JSON">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="12 15 12 3" />
+                        <path d="M5 10l7 5 7-5" />
+                    </svg>
+                    <span>Export Flowchart</span>
+                </button>
+
+                <div class="toolbar-divider"></div>
+
+                <button class="toolbar-btn" id="save-btn" title="Save">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    <span>Save</span>
+                </button>
+
+                <div class="toolbar-divider"></div>
+
+                <button class="btn btn-primary btn-sm" id="next-step-btn">
+                    Next: Audit Analysis
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- ============================================
+         Main Editor Area
+         ============================================ -->
+        <div class="editor-main">
+            <!-- Left Sidebar - Shape Library -->
+            <aside class="shape-library" id="shape-library">
+                <div class="library-header">
+                    <h3>Shape Library</h3>
+                    <span class="library-subtitle">ANSI/ISO 5807</span>
+                </div>
+
+                <div class="library-search">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" placeholder="Search shapes..." id="shape-search">
+                </div>
+
+                <div class="library-section">
+                    <h4>Basic Shapes</h4>
+                    <div class="shape-grid">
+                        <div class="shape-item" data-shape="terminator" title="Terminator (Start/End)">
+                            <div class="shape-preview terminator"></div>
+                            <span>Start/End</span>
+                        </div>
+                        <div class="shape-item" data-shape="process" title="Process">
+                            <div class="shape-preview process"></div>
+                            <span>Process</span>
+                        </div>
+                        <div class="shape-item" data-shape="decision" title="Decision">
+                            <div class="shape-preview decision"></div>
+                            <span>Decision</span>
+                        </div>
+                        <div class="shape-item" data-shape="manual-input" title="Manual Input">
+                            <div class="shape-preview manual-input"></div>
+                            <span>Manual Input</span>
+                        </div>
+                        <div class="shape-item" data-shape="manual-operation" title="Manual Operation">
+                            <div class="shape-preview manual-operation"></div>
+                            <span>Manual Op</span>
+                        </div>
+                        <div class="shape-item" data-shape="document" title="Document">
+                            <div class="shape-preview document"></div>
+                            <span>Document</span>
+                        </div>
+                        <div class="shape-item" data-shape="multiple-documents" title="Multiple Documents">
+                            <div class="shape-preview multiple-documents"></div>
+                            <span>Multi Doc</span>
+                        </div>
+                        <div class="shape-item" data-shape="database" title="Database">
+                            <div class="shape-preview database"></div>
+                            <span>Database</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="library-section">
+                    <h4>Connectors</h4>
+                    <div class="shape-grid">
+                        <div class="shape-item" data-shape="connector" title="Connector">
+                            <div class="shape-preview connector"></div>
+                            <span>Connector</span>
+                        </div>
+                        <div class="shape-item" data-shape="off-page" title="Off-page Connector">
+                            <div class="shape-preview off-page"></div>
+                            <span>Off-page</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Canvas Area -->
+            <div class="canvas-container" id="canvas-container">
+                <div class="canvas-wrapper" id="canvas-wrapper">
+                    <svg class="flowchart-canvas" id="flowchart-canvas" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Grid Pattern -->
+                        <defs>
+                            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--color-gray-200)"
+                                    stroke-width="0.5" />
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+
+                        <!-- Swimlanes Group -->
+                        <g id="swimlanes-group">
+                            <!-- Swimlanes will be rendered here -->
+                        </g>
+
+                        <!-- Connectors Group -->
+                        <g id="connectors-group">
+                            <!-- Connectors will be rendered here -->
+                        </g>
+
+                        <!-- Nodes Group -->
+                        <g id="nodes-group">
+                            <!-- Flowchart nodes will be rendered here -->
+                        </g>
+
+                        <!-- WCGW Indicators Group -->
+                        <g id="wcgw-group">
+                            <!-- WCGW indicators will be rendered here -->
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Canvas Controls -->
+                <div class="canvas-controls">
+                    <button class="canvas-control-btn" id="pan-tool" title="Pan Tool (Space)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" />
+                        </svg>
+                    </button>
+                    <button class="canvas-control-btn" id="select-tool" title="Select Tool (V)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Mini Map -->
+                <div class="mini-map" id="mini-map">
+                    <div class="mini-map-viewport" id="mini-viewport"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sprint 6 Phase 1: Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span class="status-item">
+                    <span class="status-label">Nodes:</span>
+                    <span class="status-value" id="status-node-count">0</span>
+                </span>
+                <span class="status-item">
+                    <span class="status-label">Swimlanes:</span>
+                    <span class="status-value" id="status-lane-count">0</span>
+                </span>
+            </div>
+            <div class="status-center">
+                <span class="status-item">
+                    <span class="status-label">Orientation:</span>
+                    <span class="status-value" id="status-orientation">Vertical</span>
+                </span>
+            </div>
+            <div class="status-right">
+                <span class="status-item">
+                    <span class="status-label">Zoom:</span>
+                    <span class="status-value" id="status-zoom">100%</span>
+                </span>
+                <span class="status-item">
+                    <span class="status-label" id="status-save">Saved</span>
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Right Sidebar - WCGW Detection Panel -->
+    <aside class="detection-panel" id="detection-panel">
+        <div class="panel-header">
+            <h3>WCGW Detections</h3>
+            <span class="detection-count" id="detection-count">0</span>
+            <button class="panel-close" id="close-detection-panel">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Statistics -->
+            <div class="detection-stats" id="detection-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-total">0</span>
+                    <span class="stat-label">Total</span>
+                </div>
+                <div class="stat-item stat-high">
+                    <span class="stat-value" id="stat-high">0</span>
+                    <span class="stat-label">High</span>
+                </div>
+                <div class="stat-item stat-medium">
+                    <span class="stat-value" id="stat-medium">0</span>
+                    <span class="stat-label">Medium</span>
+                </div>
+                <div class="stat-item stat-low">
+                    <span class="stat-value" id="stat-low">0</span>
+                    <span class="stat-label">Low</span>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="detection-filters">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="high">High</button>
+                <button class="filter-tab" data-filter="pending">Pending</button>
+            </div>
+
+            <!-- Detection List -->
+            <div class="detection-list" id="detection-list">
+                <div class="empty-state" id="detection-empty">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-300)"
+                        stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <p>No WCGW detections yet</p>
+                    <p class="empty-subtitle">Click "Detect WCGW" to analyze the flowchart</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Right Sidebar - Control Recommendations Panel (Phase 6A) -->
+    <aside class="control-panel hidden" id="control-panel">
+        <div class="panel-header">
+            <h3>Recommended Controls</h3>
+            <span class="control-count" id="control-count">0</span>
+            <button class="panel-close" id="close-control-panel">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Empty State -->
+            <div class="empty-state" id="control-empty">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-300)"
+                    stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <p>No control recommendations yet</p>
+                <p class="empty-subtitle">Run WCGW Detection first to get control recommendations</p>
+            </div>
+
+            <!-- Control List -->
+            <div class="control-list" id="control-list">
+                <!-- Controls will be populated dynamically -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Right Sidebar - Effectiveness Assessment Panel -->
+    <aside class="effectiveness-panel hidden" id="effectiveness-panel">
+        <div class="panel-header">
+            <h3>Control Effectiveness</h3>
+            <span class="effectiveness-count" id="effectiveness-count">0</span>
+            <button class="panel-close" id="close-effectiveness-panel">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Empty State -->
+            <div class="empty-state" id="effectiveness-empty">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-300)"
+                    stroke-width="1.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                <p>No effectiveness assessments yet</p>
+                <p class="empty-subtitle">Select controls from recommendations to assess effectiveness</p>
+            </div>
+
+            <!-- Coverage Stats -->
+            <div class="effectiveness-stats hidden" id="effectiveness-stats">
+                <div class="stat-item stat-high">
+                    <span class="stat-value" id="stat-high">0</span>
+                    <span class="stat-label">High</span>
+                </div>
+                <div class="stat-item stat-medium">
+                    <span class="stat-value" id="stat-medium">0</span>
+                    <span class="stat-label">Medium</span>
+                </div>
+                <div class="stat-item stat-low">
+                    <span class="stat-value" id="stat-low">0</span>
+                    <span class="stat-label">Low</span>
+                </div>
+            </div>
+
+            <!-- Coverage Bar -->
+            <div class="coverage-section hidden" id="coverage-section">
+                <div class="coverage-header">
+                    <span>Coverage</span>
+                    <span id="coverage-percent">0%</span>
+                </div>
+                <div class="coverage-bar">
+                    <div class="coverage-fill" id="coverage-fill"></div>
+                </div>
+                <div class="coverage-details">
+                    <span id="coverage-detections">0 of 0 detections covered</span>
+                </div>
+            </div>
+
+            <!-- Assessment List -->
+            <div class="effectiveness-list" id="effectiveness-list">
+                <!-- Assessments will be populated dynamically -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Right Sidebar - Residual Risk Assessment Panel (Phase 6C) -->
+    <aside class="residual-risk-panel hidden" id="residual-risk-panel">
+        <div class="panel-header">
+            <h3>Residual Risk Assessment</h3>
+            <span class="residual-risk-count" id="residual-risk-count">0</span>
+            <button class="panel-close" id="close-residual-risk-panel">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Empty State -->
+            <div class="empty-state" id="residual-risk-empty">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-300)"
+                    stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
+                </svg>
+                <p>No residual risk assessments yet</p>
+                <p class="empty-subtitle">Complete effectiveness assessments first, then calculate residual risk</p>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="residual-risk-summary hidden" id="residual-risk-summary">
+                <div class="summary-card">
+                    <div class="summary-label">Average Residual Score</div>
+                    <div class="summary-value" id="avg-residual-score">0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Avg Risk Reduction</div>
+                    <div class="summary-value" id="avg-risk-reduction">0%</div>
+                </div>
+            </div>
+
+            <!-- Risk Distribution -->
+            <div class="risk-distribution hidden" id="risk-distribution">
+                <div class="distribution-header">Risk Distribution</div>
+                <div class="distribution-bars">
+                    <div class="distribution-item">
+                        <span class="distribution-label">High</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill high" id="high-risk-fill"></div>
+                        </div>
+                        <span class="distribution-count" id="high-risk-count">0</span>
+                    </div>
+                    <div class="distribution-item">
+                        <span class="distribution-label">Medium</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill medium" id="medium-risk-fill"></div>
+                        </div>
+                        <span class="distribution-count" id="medium-risk-count">0</span>
+                    </div>
+                    <div class="distribution-item">
+                        <span class="distribution-label">Low</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill low" id="low-risk-fill"></div>
+                        </div>
+                        <span class="distribution-count" id="low-risk-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Summary -->
+            <div class="status-summary hidden" id="status-summary">
+                <div class="status-item acceptable">
+                    <span class="status-label">Acceptable</span>
+                    <span class="status-value" id="acceptable-count">0</span>
+                </div>
+                <div class="status-item need-control">
+                    <span class="status-label">Need Additional Control</span>
+                    <span class="status-value" id="need-control-count">0</span>
+                </div>
+            </div>
+
+            <!-- Assessment List -->
+            <div class="residual-risk-list" id="residual-risk-list">
+                <!-- Assessments will be populated dynamically -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Right Sidebar - Audit Recommendations Panel (Phase 6D) -->
+    <aside class="audit-recommendation-panel hidden" id="audit-recommendation-panel">
+        <div class="panel-header">
+            <h3>Audit Recommendations</h3>
+            <span class="audit-recommendation-count" id="audit-recommendation-count">0</span>
+            <button class="panel-close" id="close-audit-recommendation-panel">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Empty State -->
+            <div class="empty-state" id="audit-recommendation-empty">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-300)"
+                    stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <p>No audit recommendations yet</p>
+                <p class="empty-subtitle">Calculate residual risk first, then generate audit recommendations</p>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="audit-rec-summary hidden" id="audit-rec-summary">
+                <div class="summary-card">
+                    <div class="summary-value" id="total-recommendations">0</div>
+                    <div class="summary-label">Total Procedures</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="high-priority-count">0</div>
+                    <div class="summary-label">High Priority</div>
+                </div>
+            </div>
+
+            <!-- Priority Distribution -->
+            <div class="priority-distribution hidden" id="priority-distribution">
+                <div class="distribution-header">Priority Distribution</div>
+                <div class="distribution-bars">
+                    <div class="distribution-item">
+                        <span class="distribution-label">High</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill priority-high" id="high-priority-fill"></div>
+                        </div>
+                        <span class="distribution-count" id="high-priority-fill-count">0</span>
+                    </div>
+                    <div class="distribution-item">
+                        <span class="distribution-label">Medium</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill priority-medium" id="medium-priority-fill"></div>
+                        </div>
+                        <span class="distribution-count" id="medium-priority-fill-count">0</span>
+                    </div>
+                    <div class="distribution-item">
+                        <span class="distribution-label">Low</span>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill priority-low" id="low-priority-fill"></div>
+                        </div>
+                        <span class="distribution-count" id="low-priority-fill-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Type Summary -->
+            <div class="test-type-summary hidden" id="test-type-summary">
+                <div class="test-type-header">Test Types</div>
+                <div class="test-type-items">
+                    <div class="test-type-item">
+                        <span class="test-type-icon substantive">S</span>
+                        <span class="test-type-label">Substantive</span>
+                        <span class="test-type-count" id="substantive-count">0</span>
+                    </div>
+                    <div class="test-type-item">
+                        <span class="test-type-icon toc">TC</span>
+                        <span class="test-type-label">Test of Controls</span>
+                        <span class="test-type-count" id="toc-count">0</span>
+                    </div>
+                    <div class="test-type-item">
+                        <span class="test-type-icon analytical">A</span>
+                        <span class="test-type-label">Analytical</span>
+                        <span class="test-type-count" id="analytical-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations List -->
+            <div class="audit-recommendation-list" id="audit-recommendation-list">
+                <!-- Recommendations will be populated dynamically -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Right Sidebar - Property Panel (for node editing) -->
+    <aside class="property-panel hidden" id="property-panel">
+        <div class="panel-header">
+            <h3>Properties</h3>
+            <button class="panel-close" id="close-panel">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Node Properties -->
+            <div class="property-section" id="node-properties">
+                <div class="property-group">
+                    <label>Shape Type</label>
+                    <select id="node-type" class="property-select">
+                        <option value="terminator">Terminator</option>
+                        <option value="process">Process</option>
+                        <option value="decision">Decision</option>
+                        <option value="manual-input">Manual Input</option>
+                        <option value="manual-operation">Manual Operation</option>
+                        <option value="document">Document</option>
+                        <option value="database">Database</option>
+                    </select>
+                </div>
+
+                <div class="property-group">
+                    <label>Text</label>
+                    <textarea id="node-text" class="property-textarea" rows="3"
+                        placeholder="Enter node text..."></textarea>
+                </div>
+
+                <div class="property-group">
+                    <label>Swimlane</label>
+                    <select id="node-swimlane" class="property-select">
+                        <!-- Swimlanes will be populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="property-group">
+                    <label>Color</label>
+                    <div class="color-picker">
+                        <button class="color-option start" data-color="start" title="Start"></button>
+                        <button class="color-option process" data-color="process" title="Process"></button>
+                        <button class="color-option decision" data-color="decision" title="Decision"></button>
+                        <button class="color-option document" data-color="document" title="Document"></button>
+                        <button class="color-option database" data-color="database" title="Database"></button>
+                        <button class="color-option end" data-color="end" title="End"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WCGW Properties -->
+            <div class="property-section" id="wcgw-properties">
+                <div class="property-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="wcgw-toggle">
+                        <span>Add WCGW Indicator</span>
+                    </label>
+                </div>
+
+                <div class="wcgw-details hidden" id="wcgw-details">
+                    <div class="property-group">
+                        <label>WCGW Description</label>
+                        <textarea id="wcgw-text" class="property-textarea" rows="3"
+                            placeholder="What could go wrong?"></textarea>
+                    </div>
+
+                    <div class="property-group">
+                        <label>Risk Level</label>
+                        <select id="wcgw-risk" class="property-select">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label>Existing Control</label>
+                        <textarea id="wcgw-control" class="property-textarea" rows="2"
+                            placeholder="Existing control..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="property-actions">
+                <button class="btn btn-danger btn-sm" id="delete-node">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    Delete Node
+                </button>
+            </div>
+        </div>
+    </aside>
+    </div>
+
+    <!-- ============================================
+         Bottom Status Bar
+         ============================================ -->
+    <footer class="editor-statusbar">
+        <div class="status-left">
+            <span class="status-item">
+                <span class="status-dot saved"></span>
+                <span id="save-status">All changes saved</span>
+            </span>
+            <span class="status-item">
+                Nodes: <span id="node-count">0</span>
+            </span>
+            <span class="status-item">
+                Swimlanes: <span id="swimlane-count">0</span>
+            </span>
+        </div>
+
+        <div class="status-center">
+            <span class="status-item" id="cursor-position">X: 0, Y: 0</span>
+        </div>
+
+        <div class="status-right">
+            <span class="status-item">
+                <span class="status-badge" id="validation-status">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Valid
+                </span>
+            </span>
+            <span class="status-item">v1.0</span>
+        </div>
+    </footer>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu hidden" id="context-menu">
+        <div class="context-menu-item" data-action="edit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+            Edit Node
+        </div>
+        <div class="context-menu-item" data-action="duplicate">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Duplicate
+        </div>
+        <div class="context-menu-divider"></div>
+        <div class="context-menu-item" data-action="delete">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+            Delete
+        </div>
+    </div>
+
+    <!-- WCGW Detection Modal -->
+    <div class="modal-overlay hidden" id="detection-modal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3>WCGW Detection Report</h3>
+                <button class="modal-close" id="close-detection-modal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="detection-modal-body">
+                <!-- Detection report content will be rendered here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-modal-btn">Close</button>
+                <button class="btn btn-primary" id="export-report-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Export Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detection Detail Modal -->
+    <div class="modal-overlay hidden" id="detection-detail-modal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3 id="detail-modal-title">Detection Details</h3>
+                <button class="modal-close" id="close-detail-modal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="detection-detail-body">
+                <!-- Detail content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="reject-detection-btn">Reject</button>
+                <button class="btn btn-warning" id="mitigate-detection-btn">Mark as Mitigated</button>
+                <button class="btn btn-primary" id="accept-detection-btn">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- Core dependencies -->
+    <script src="data/knowledgeBase.js"></script>
+    <script src="js/schema-validator.js"></script>
+    <script src="js/data-migration.js"></script>
+    <script src="js/riskEngine.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/audit-formatter.js"></script>
+    <script src="js/audit-trail.js"></script>
+    <script src="js/shared-utils.js"></script>
+
+    <!-- Flowchart modular architecture -->
+    <script src="js/flowchart-state.js"></script>
+    <script src="js/flowchart-renderer.js"></script>
+    <script src="js/flowchart-undo-redo.js"></script>
+    <script src="js/flowchart-interactions.js"></script>
+    <script src="js/flowchart-editor.js"></script>
+
+    <!-- WCGW Detection modular architecture -->
+    <script src="js/wcgw-detection-ui.js"></script>
+    <script src="js/wcgw-detection-actions.js"></script>
+    <script src="js/wcgw-detection.js"></script>
+
+    <!-- Control Recommender (Phase 6A) -->
+    <script src="js/control-recommender.js"></script>
+
+    <!-- Effectiveness Assessor (Phase 6B) -->
+    <script src="js/effectiveness-assessor.js"></script>
+
+    <!-- Residual Risk Assessor (Phase 6C) -->
+    <script src="js/residual-risk-assessor.js"></script>
+
+    <!-- Audit Recommendation Engine (Phase 6D) -->
+    <script src="js/audit-recommendation-engine.js"></script>
+
+    <!-- Simple Export Module (Backup Export) -->
+    <script src="js/export-simple.js"></script>
+</body>
+
+</html>

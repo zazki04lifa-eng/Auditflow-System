@@ -1,0 +1,811 @@
+/* ==========================================================================
+   Audit Summary Page Styles
+   Sprint 7 - Final Report
+   ========================================================================== */
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.summary-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.summary-main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 32px;
+    background-color: var(--color-gray-50);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.header-left {
+    flex: 1;
+}
+
+.page-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: 4px;
+}
+
+.page-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* ==========================================================================
+   Loading & Empty States
+   ========================================================================== */
+
+.loading-state,
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--color-gray-200);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-state p,
+.empty-state p {
+    color: var(--color-gray-500);
+    font-size: var(--font-size-base);
+}
+
+.empty-state h3 {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-700);
+    margin: 16px 0 8px;
+}
+
+.empty-state svg {
+    margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   Summary Sections
+   ========================================================================== */
+
+.summary-section {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-gray-100);
+}
+
+/* ==========================================================================
+   Executive Cards
+   ========================================================================== */
+
+.executive-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.exec-card {
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    border-left: 4px solid var(--color-gray-400);
+}
+
+.exec-card-value {
+    display: block;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: 4px;
+}
+
+.exec-card-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.exec-card-primary {
+    border-left-color: var(--color-primary);
+}
+
+.exec-card-success {
+    border-left-color: var(--color-success);
+}
+
+.exec-card-warning {
+    border-left-color: var(--color-warning);
+}
+
+.exec-card-danger {
+    border-left-color: var(--color-error);
+}
+
+.exec-card-info {
+    border-left-color: var(--color-info);
+}
+
+.exec-card-primary .exec-card-value {
+    color: var(--color-primary);
+}
+
+.exec-card-success .exec-card-value {
+    color: var(--color-success);
+}
+
+.exec-card-warning .exec-card-value {
+    color: var(--color-warning);
+}
+
+.exec-card-danger .exec-card-value {
+    color: var(--color-error);
+}
+
+.exec-card-info .exec-card-value {
+    color: var(--color-info);
+}
+
+/* ==========================================================================
+   Conclusion Box
+   ========================================================================== */
+
+.conclusion-box {
+    background: #ebf8ff;
+    border-left: 4px solid var(--color-info);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 20px;
+}
+
+.conclusion-header {
+    margin-bottom: 16px;
+}
+
+.conclusion-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-high {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.badge-medium {
+    background: #feebc8;
+    color: #c05621;
+}
+
+.badge-low {
+    background: #c6f6d5;
+    color: #2f855a;
+}
+
+.badge-primary {
+    background: #bee3f8;
+    color: #2b6cb0;
+}
+
+.badge-info {
+    background: #e9d8fd;
+    color: #6b46c1;
+}
+
+.badge-success {
+    background: #c6f6d5;
+    color: #2f855a;
+}
+
+.badge-warning {
+    background: #feebc8;
+    color: #c05621;
+}
+
+.badge-danger {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.conclusion-text {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.conclusion-findings h4,
+.conclusion-recommendations h4 {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    margin-bottom: 8px;
+}
+
+.conclusion-findings ul,
+.conclusion-recommendations ul {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+.conclusion-findings li,
+.conclusion-recommendations li {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: 4px;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   Info Grid
+   ========================================================================== */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.info-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+}
+
+/* ==========================================================================
+   Business Understanding
+   ========================================================================== */
+
+.bu-section {
+    margin-bottom: 20px;
+}
+
+.bu-section:last-child {
+    margin-bottom: 0;
+}
+
+.bu-section h3 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    margin-bottom: 8px;
+}
+
+.bu-section p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.7;
+}
+
+.bu-section strong {
+    color: var(--color-gray-800);
+}
+
+/* ==========================================================================
+   Flowchart Summary
+   ========================================================================== */
+
+.fc-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.fc-stat {
+    text-align: center;
+    padding: 16px;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.fc-stat-value {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: 4px;
+}
+
+.fc-stat-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   WCGW Analysis
+   ========================================================================== */
+
+.risk-distribution {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.risk-stat {
+    text-align: center;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+}
+
+.risk-stat-high {
+    background: #fff5f5;
+    border-color: var(--color-error);
+}
+
+.risk-stat-medium {
+    background: #fffaf0;
+    border-color: var(--color-warning);
+}
+
+.risk-stat-low {
+    background: #f0fff4;
+    border-color: var(--color-success);
+}
+
+.risk-stat-value {
+    display: block;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 4px;
+}
+
+.risk-stat-high .risk-stat-value {
+    color: var(--color-error);
+}
+
+.risk-stat-medium .risk-stat-value {
+    color: var(--color-warning);
+}
+
+.risk-stat-low .risk-stat-value {
+    color: var(--color-success);
+}
+
+.risk-stat-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Risk Overview
+   ========================================================================== */
+
+.risk-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.risk-overview-item {
+    text-align: center;
+    padding: 16px;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.risk-overview-value {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: 4px;
+}
+
+.risk-overview-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Control Stats
+   ========================================================================== */
+
+.control-stats,
+.effectiveness-stats,
+.ar-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.control-stat,
+.eff-stat,
+.ar-stat {
+    text-align: center;
+    padding: 16px;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.control-stat-value,
+.eff-stat-value,
+.ar-stat-value {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: 4px;
+}
+
+.ar-stat-high .ar-stat-value {
+    color: var(--color-error);
+}
+
+.ar-stat-medium .ar-stat-value {
+    color: var(--color-warning);
+}
+
+.ar-stat-low .ar-stat-value {
+    color: var(--color-success);
+}
+
+.control-stat-label,
+.eff-stat-label,
+.ar-stat-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Residual Risk Stats
+   ========================================================================== */
+
+.rr-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.rr-stat {
+    text-align: center;
+    padding: 16px;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.rr-stat-value {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: 4px;
+}
+
+.rr-stat-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+.rr-status {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.rr-status-item {
+    text-align: center;
+    padding: 16px;
+    border-radius: var(--radius-md);
+}
+
+.rr-status-acceptable {
+    background: #f0fff4;
+    border: 2px solid var(--color-success);
+}
+
+.rr-status-need {
+    background: #fff5f5;
+    border: 2px solid var(--color-error);
+}
+
+.rr-status-value {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 4px;
+}
+
+.rr-status-acceptable .rr-status-value {
+    color: var(--color-success);
+}
+
+.rr-status-need .rr-status-value {
+    color: var(--color-error);
+}
+
+.rr-status-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Data Tables
+   ========================================================================== */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+.data-table thead th {
+    background: var(--color-gray-100);
+    color: var(--color-gray-700);
+    font-weight: var(--font-weight-semibold);
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--color-gray-200);
+}
+
+.data-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--color-gray-100);
+    color: var(--color-gray-700);
+}
+
+.data-table tbody tr:hover {
+    background: var(--color-gray-50);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==========================================================================
+   Final Conclusion
+   ========================================================================== */
+
+.final-conclusion-box {
+    background: linear-gradient(135deg, #ebf8ff 0%, #f0fff4 100%);
+    border: 2px solid var(--color-info);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.final-text {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.final-findings h4,
+.final-recommendations h4 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+    margin-bottom: 8px;
+}
+
+.final-findings ul,
+.final-recommendations ul {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+.final-findings li,
+.final-recommendations li {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: 4px;
+    line-height: 1.6;
+}
+
+.final-meta {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.final-meta p {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+
+    .fc-stats,
+    .control-stats,
+    .effectiveness-stats,
+    .ar-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .summary-main {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .summary-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .executive-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fc-stats,
+    .risk-distribution,
+    .risk-overview,
+    .control-stats,
+    .effectiveness-stats,
+    .rr-stats,
+    .rr-status,
+    .ar-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .data-table {
+        font-size: var(--font-size-xs);
+    }
+
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 8px;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+
+    .sidebar,
+    .header-actions {
+        display: none !important;
+    }
+
+    .summary-main {
+        margin-left: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+    .summary-section {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #e2e8f0;
+    }
+
+    .exec-card,
+    .fc-stat,
+    .risk-stat,
+    .control-stat,
+    .eff-stat,
+    .rr-stat,
+    .ar-stat {
+        break-inside: avoid;
+    }
+
+    h1 {
+        font-size: 20px !important;
+    }
+
+    h2 {
+        font-size: 16px !important;
+    }
+
+    h3 {
+        font-size: 14px !important;
+    }
+
+    .badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .exec-card,
+    .risk-stat-high,
+    .risk-stat-medium,
+    .risk-stat-low,
+    .conclusion-box,
+    .final-conclusion-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
